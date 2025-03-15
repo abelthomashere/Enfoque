@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enfoque - Photography</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #2e5e3d; /* Leaf green */
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #2e5e3d;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+        .upload-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .upload-section input {
+            display: none;
+        }
+        .upload-label {
+            display: block;
+            padding: 10px;
+            background-color: #2e5e3d;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .gallery img, .gallery video {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .map {
+            margin-top: 20px;
+            text-align: center;
+        }
+        iframe {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+        }
+        .contact {
+            background: white;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .contact input, .contact textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .contact button {
+            background-color: #2e5e3d;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>Enfoque - Photography</header>
+
+<div class="container">
+    <!-- Upload Section -->
+    <div class="upload-section">
+        <h2>Upload Photos & Videos</h2>
+        <label for="fileInput" class="upload-label">Choose File</label>
+        <input type="file" id="fileInput" accept="image/*,video/*" multiple>
+        <div class="gallery" id="gallery"></div>
+    </div>
+
+    <!-- Map Section -->
+    <div class="map">
+        <h2>Our Location</h2>
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345093783!2d144.95373631550492!3d-37.81627974202153!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577f9f4b7b6c9c4!2sMelbourne%20CBD!5e0!3m2!1sen!2sau!4v1605232512345!5m2!1sen!2sau" 
+            allowfullscreen="" loading="lazy">
+        </iframe>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="contact">
+        <h2>Contact Us</h2>
+        <form action="mailto:your-email@example.com" method="post" enctype="text/plain">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = ''; // Clear previous content
+        Array.from(event.target.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                let element;
+                if (file.type.startsWith('image')) {
+                    element = document.createElement('img');
+                    element.src = e.target.result;
+                } else if (file.type.startsWith('video')) {
+                    element = document.createElement('video');
+                    element.src = e.target.result;
+                    element.controls = true;
+                }
+                if (element) {
+                    gallery.appendChild(element);
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+</script>
+
+</body>
+</html>
